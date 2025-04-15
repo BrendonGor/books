@@ -1,0 +1,40 @@
+---
+export interface Props {
+  allCategories: string[];
+  selectedCategories: string[];
+}
+const { allCategories, selectedCategories } = Astro.props;
+---
+
+<form id="filter-form" class="mb-6" on:submit.prevent={() => {}}>
+  <fieldset class="mb-4">
+    <legend class="text-lg font-bold mb-2">Filter by category:</legend>
+    <div class="flex flex-wrap gap-3">
+      {
+        allCategories.map((cat) => (
+          <label class="label cursor-pointer flex items-center gap-2">
+            <input
+              type="checkbox"
+              class="checkbox checkbox-sm"
+              name="category"
+              value={cat}
+              checked={selectedCategories.includes(cat)}
+            />
+            <span class="label-text capitalize">{cat}</span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+  <button type="submit" class="btn btn-primary btn-sm"> Apply Filters </button>
+  <script>
+    const form = document.getElementById("filter-form") as HTMLFormElement;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const selected = formData.getAll("category").sort();
+      const path = `/texts/${selected.join("+")}`; // works with no filters
+      window.location.href = path;
+    });
+  </script>
+</form>

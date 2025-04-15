@@ -1,11 +1,65 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout>
+  <section class="bg-base-100 text-base-content py-16 px-6 md:px-12">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-primary mb-4">
+        Discover Faculty-Recommended Books
+      </h1>
+      <p class="text-lg text-base-content/70 mb-8">
+        This University of Utah project curates timelines of essential readings
+        recommended by faculty members. Explore influential texts across
+        disciplines— from philosophy to computer science—and follow the
+        intellectual lineage of great ideas.
+      </p>
+      <div class="flex justify-center gap-4 mb-8 flex-wrap">
+        <a href="/texts" class="btn btn-primary">Browse All Books</a>
+        <a href="/contributors" class="btn btn-secondary"
+          >Meet the contributors</a
+        >
+        <a href="/texts" class="btn btn-outline">Filter by Topic</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-base-200 py-12">
+    <div
+      class="max-w-5xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-8 items-center"
+    >
+      <div class="text-center">
+        <h2 class="text-2xl font-bold text-secondary-content mb-2">
+          📚 Interactive Timelines
+        </h2>
+        <p
+          class="text-base-content/80 border-2 shadow-red-600/50 shadow-lg p-2"
+        >
+          See how ideas and books influence one another across time. Our
+          timelines visually trace recommendations and intellectual connections
+          from one book to the next.
+        </p>
+      </div>
+      <div class="text-center">
+        <h2 class="text-2xl font-bold text-secondary-content mb-2">
+          🔍 Smart Filters
+        </h2>
+        <p
+          class="text-base-content/80 border-2 shadow-red-600/50 shadow-lg p-2"
+        >
+          Search and filter books by category, recommender, or year. Whether
+          you're looking for a starting point or deep cuts, We're here to help.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-base-100 py-16 px-6 md:px-12 text-center">
+    <h2 class="text-2xl font-bold mb-4 text-primary">📖 Get Inspired</h2>
+    <p class="text-base-content/70 max-w-2xl mx-auto mb-8">
+      Every book on this site was selected for its impact, insight, or elegance.
+      Let the University of Utah’s top thinkers guide your next read.
+    </p>
+    <a href="/texts" class="btn btn-accent">Explore the Collection</a>
+  </section>
+</BaseLayout>

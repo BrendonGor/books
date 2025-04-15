@@ -1,0 +1,174 @@
+---
+import {
+  getCollection,
+  type CollectionEntry,
+  render,
+  getEntry,
+  getEntries,
+} from "astro:content";
+import { AstroError } from "astro/errors";
+import Layout from "../../layouts/Layout.astro";
+
+// Generate paths
+export async function getStaticPaths() {
+  const texts = await getCollection("texts");
+  return texts.map((text) => ({
+    params: { text: text.id }, // text is the [text] param in URL
+    props: { text }, // pass full entry as prop
+  }));
+}
+
+// Pull params & props
+const { text } = Astro.props as { text: CollectionEntry<"texts"> };
+
+if (!text) {
+  throw new AstroError(`Text not found: ${text}`);
+}
+
+const { Content } = await render(text);
+
+const relations = await getCollection("relations");
+console.log("relations");
+console.log(relations.length);
+console.log(text.id);
+console.log(relations[0].data.from);
+
+// Get 'from' and 'to' references
+const from = await Promise.all(
+  relations
+    .filter((relation) => relation.data.from.id === text.id)
+    .map(async (relation) => {
+      const toText = await getEntry(relation.data.to);
+      const { Content } = await render(relation);
+      return {
+        Content,
+        title: toText?.data.title,
+        url: `/texts/${toText?.id}`,
+        writer: relation.data.writer,
+      };
+    })
+);
+console.log("from");
+console.log(from);
+
+const to = await Promise.all(
+  relations
+    .filter((relation) => relation.data.to.id === text.id)
+    .map(async (relation) => {
+      const fromText = await getEntry(relation.data.from);
+      const { Content } = await render(relation);
+      return {
+        Content,
+        title: fromText?.data.title,
+        url: `/texts/${fromText?.id}`,
+        writer: relation.data.writer,
+      };
+    })
+);
+
+console.log("to");
+console.log(to);
+
+const recommenders = await getEntries(text.data.recommenders);
+---
+
+<Layout>
+  <div class="max-w-4xl mx-auto px-4 py-10">
+    <div class="card bg-base-100 border border-base-300 shadow-lg p-6">
+      <img
+        src={text.data.image_url}
+        alt={`Cover of ${text.data.title}`}
+        class="w-64 h-auto mb-4 mx-auto rounded"
+      />
+      <h1 class="text-3xl font-bold text-primary mb-2">{text.data.title}</h1>
+      <p class="text-base-content/60 mb-4">
+        {text.data.authors.join(", ")} — {text.data.year}
+      </p>
+
+      <div class="flex flex-wrap gap-2 mb-4">
+        {
+          text.data.categories.map((cat) => (
+            <span class="badge badge-outline badge-secondary">{cat}</span>
+          ))
+        }
+      </div>
+
+      <details class="collapse collapse-arrow bg-base-200 mb-4">
+        <summary class="collapse-title font-medium">Sources</summary>
+        <div class="collapse-content">
+          {
+            text.data.sources.map((url) => (
+              <a href={url} class="link link-primary block" target="_blank">
+                {url}
+              </a>
+            ))
+          }
+        </div>
+      </details>
+
+      <article class="prose max-w-none text-base-content mb-6">
+        <Content />
+      </article>
+
+      {
+        recommenders.length > 0 && (
+          <details class="collapse collapse-arrow bg-base-200 mb-4">
+            <summary class="collapse-title font-medium">Recommenders</summary>
+            <div class="collapse-content space-y-1">
+              {recommenders.map((r) => (
+                <a
+                  href={`/contributors/${r.id}`}
+                  class="link link-accent block"
+                >
+                  {r.data.title}
+                </a>
+              ))}
+            </div>
+          </details>
+        )
+      }
+
+      {
+        from.length > 0 && (
+          <details class="collapse collapse-arrow bg-base-200 mb-4">
+            <summary class="collapse-title font-medium">Referenced by</summary>
+            <div class="collapse-content space-y-4">
+              {from.map(({ Content, url, title, writer }) => (
+                <div class="p-4 border border-base-300 rounded bg-base-100 shadow-sm">
+                  <a href={url} class="link link-info font-semibold">
+                    {title}
+                  </a>
+                  <p class="text-sm text-base-content/60">by {writer}</p>
+                  <article class="prose max-w-none mt-2 text-base-content">
+                    <Content />
+                  </article>
+                </div>
+              ))}
+            </div>
+          </details>
+        )
+      }
+
+      {
+        to.length > 0 && (
+          <details class="collapse collapse-arrow bg-base-200">
+            <summary class="collapse-title font-medium">References</summary>
+            <div class="collapse-content space-y-4">
+              {to.map(({ Content, url, title, writer }) => (
+                <div class="p-4 border border-base-300 rounded bg-base-100 shadow-sm">
+                  <a href={url} class="link link-info font-semibold">
+                    {title}
+                  </a>
+                  <p class="text-sm text-base-content/60">by {writer}</p>
+                  <article class="prose max-w-none mt-2 text-base-content">
+                    <Content />
+                  </article>
+                </div>
+              ))}
+            </div>
+          </details>
+        )
+      }
+    </div>
+  </div>
+</Layout>

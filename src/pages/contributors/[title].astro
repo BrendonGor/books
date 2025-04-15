@@ -1,0 +1,30 @@
+---
+import { getEntry, render, getCollection } from "astro:content";
+import { AstroError } from "astro/errors";
+import Layout from "../../layouts/Layout.astro";
+import { record } from "astro:schema";
+
+// Generate paths
+export async function getStaticPaths() {
+  console.log("running");
+  const recommenders = await getCollection("recommenders");
+  console.log(recommenders);
+  return recommenders.map((recommender) => ({
+    params: { title: recommender.id }, // text is the [text] param in URL
+    props: { recommender }, // pass full entry as prop
+  }));
+}
+
+const { recommender } = Astro.props;
+
+const { Content } = await render(recommender);
+---
+
+<Layout>
+  <article class="prose prose-lg mx-auto mt-8 text-base-content">
+    <h1 class="text-3xl font-bold text-primary mb-4">
+      {recommender.data.title}
+    </h1>
+    <Content />
+  </article>
+</Layout>

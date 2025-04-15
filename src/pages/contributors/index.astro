@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+const recommenders = await getCollection("recommenders");
+---
+
+<Layout>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {
+      recommenders.map((r) => (
+        <a
+          href={`/contributors/${r.id}`}
+          class="card bg-base-100 shadow-md hover:shadow-lg border border-base-300 transition duration-200"
+        >
+          <figure class="p-4">
+            <img
+              src="https://imgproxy.divecdn.com/YLLF3lb3BLzVCODLkou4UDmesMcj_SQT2Hc_YOLbuVQ/g:nowe:0:921/c:3977:2247/rs:fill:1200:675:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9zdW5zZXRfY2FtcHVzLmpwZw==.webp"
+              alt="Default"
+              class="w-24 h-24 rounded-full object-cover mx-auto"
+            />
+          </figure>
+          <div class="card-body items-center text-center">
+            <h2 class="card-title text-lg text-primary">{r.data.title}</h2>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</Layout>

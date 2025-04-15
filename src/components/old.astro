@@ -1,0 +1,178 @@
+---
+import { getEntries } from "astro:content";
+import {
+  type CollectionEntry,
+  getEntry,
+  render,
+  getCollection,
+} from "astro:content";
+
+export interface Props {
+  texts: Array<CollectionEntry<"texts">>;
+}
+const { texts } = Astro.props;
+const relations = await getCollection("relations");
+
+const data = await Promise.all(
+  texts.map(async (text) => {
+    const from = await Promise.all(
+      relations
+        .filter((relation) => relation.data.from.id == text.id)
+        .map(async (relation) => {
+          const to_text = await getEntry(relation.data.to);
+          const { Content } = await render(relation);
+          const url = `/texts/${to_text.id}`;
+          const title = to_text.data.title;
+          const writer = relation.data.writer;
+          return { Content, title, url, writer };
+        })
+    );
+    const to = await Promise.all(
+      relations
+        .filter((relation) => relation.data.to.id == text.id)
+        .map(async (relation) => {
+          const from_text = await getEntry(relation.data.from);
+          const { Content } = await render(relation);
+          const url = `/texts/${from_text.id}`;
+          const title = from_text.data.title;
+          const writer = relation.data.writer;
+          return { Content, title, url, writer };
+        })
+    );
+    const recommenders = await getEntries(text.data.recommenders);
+    return { text, to, from, recommenders };
+  })
+);
+---
+
+<div class="space-y-10">
+  {
+    data.map(async ({ text, to, from, recommenders }) => {
+      const { Content } = await render(text);
+
+      const sources = text.data.sources;
+      const categories = text.data.categories;
+
+      return (
+        <div
+          id={text.id}
+          class="card bg-base-100 border border-base-300 shadow-lg p-6"
+        >
+          {/* Year */}
+          <p class="text-lg font-bold text-primary mb-1">{text.data.year}</p>
+
+          {/* Title + Authors */}
+          <h2 class="text-2xl font-semibold mb-1 text-base-content">
+            {text.data.title}
+          </h2>
+          <p class="text-sm text-base-content/60 mb-3">
+            {text.data.authors.join(", ")}
+          </p>
+
+          {/* Categories */}
+          {categories.length > 0 && (
+            <div class="flex flex-wrap gap-2 mb-4">
+              {categories.map((cat) => (
+                <div class="badge badge-outline badge-secondary">{cat}</div>
+              ))}
+            </div>
+          )}
+
+          {/* Sources */}
+          {sources.length > 0 && (
+            <details class="collapse collapse-arrow bg-base-200 mb-3">
+              <summary class="collapse-title font-medium text-base-content">
+                Sources
+              </summary>
+              <div class="collapse-content space-y-1">
+                {sources.map((url) => (
+                  <a href={url} target="_blank" class="link link-primary block">
+                    {url}
+                  </a>
+                ))}
+              </div>
+            </details>
+          )}
+
+          {/* Rendered markdown */}
+          <article class="prose max-w-none mb-4 text-base-content">
+            <Content />
+          </article>
+
+          {/* Recommenders */}
+          {recommenders.length > 0 && (
+            <details class="collapse collapse-arrow bg-base-200 mb-3">
+              <summary class="collapse-title font-medium text-base-content">
+                Recommenders
+              </summary>
+              <div class="collapse-content space-y-1">
+                {recommenders.map(async (r) => (
+                  <a
+                    href={`contributors/${r.id}`}
+                    class="link link-accent block"
+                  >
+                    {r.data.title}
+                  </a>
+                ))}
+              </div>
+            </details>
+          )}
+
+          {/* FROM */}
+          {from.length > 0 && (
+            <details class="collapse collapse-arrow bg-base-200 mb-3">
+              <summary class="collapse-title font-medium text-base-content">
+                Referenced by
+              </summary>
+              <p class="text-sm text-base-content/70">
+                Texts that were inspired by this text
+              </p>
+              <div class="collapse-content space-y-4">
+                {(await Promise.all(from)).map(
+                  ({ Content, url, title, writer }) => (
+                    <div class="p-4 border border-base-300 rounded bg-base-100 shadow-sm">
+                      <a href={url} class="link link-info font-semibold">
+                        {title}
+                      </a>
+                      <p class="text-sm text-base-content/60">by {writer}</p>
+                      <article class="prose max-w-none mt-2 text-base-content">
+                        <Content />
+                      </article>
+                    </div>
+                  )
+                )}
+              </div>
+            </details>
+          )}
+
+          {/* TO */}
+          {to.length > 0 && (
+            <details class="collapse collapse-arrow bg-base-200">
+              <summary class="collapse-title font-medium text-base-content">
+                References
+              </summary>
+              <p class="text-sm text-base-content/70">
+                Texts that inspired this text
+              </p>
+              <div class="collapse-content space-y-4">
+                {(await Promise.all(to)).map(
+                  ({ Content, url, title, writer }) => (
+                    <div class="p-4 border border-base-300 rounded bg-base-100 shadow-sm">
+                      <a href={url} class="link link-info font-semibold">
+                        {title}
+                      </a>
+                      <p class="text-sm text-base-content/60">by {writer}</p>
+                      <article class="prose max-w-none mt-2 text-base-content">
+                        <Content />
+                      </article>
+                    </div>
+                  )
+                )}
+              </div>
+            </details>
+          )}
+        </div>
+      );
+    })
+  }
+</div>

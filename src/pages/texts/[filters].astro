@@ -1,0 +1,82 @@
+---
+import { getCollection } from "astro:content";
+import type {
+  InferGetStaticParamsType,
+  InferGetStaticPropsType,
+  GetStaticPaths,
+} from "astro";
+import TextsFilters from "../../components/TextsFilters.astro";
+import Timeline from "../../components/Timeline.astro";
+import Layout from "../../layouts/Layout.astro";
+
+export const getStaticPaths = (async () => {
+  const texts = await getCollection("texts");
+
+  // Get all unique categories
+  const uniqueCategories = new Set(
+    texts.flatMap((t) => t.data.categories ?? [])
+  ); // more specific then ||
+  const categories = Array.from(uniqueCategories).sort();
+
+  const combinations = new Set<string>();
+
+  const maxCombo = 3;
+  function generateCombos(arr: Array<string>, prefix: Array<string> = []) {
+    // add combination string
+    if (prefix.length > 0) {
+      combinations.add(prefix.slice().sort().join("+"));
+    }
+    // base case where have maxCombo combinations
+    if (prefix.length >= maxCombo) return;
+    // recur on combos
+    for (let i = 0; i < arr.length; i++) {
+      generateCombos(arr.slice(i + 1), [...prefix, arr[i]]);
+    }
+  }
+
+  generateCombos(categories);
+
+  return Array.from(combinations).map((combo) => ({
+    params: { filters: combo },
+    props: {},
+  }));
+}) satisfies GetStaticPaths;
+
+// START -----------------------
+
+// type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+// type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { filters } = Astro.params;
+const selectedCategories = filters.split("+").filter(Boolean).sort();
+console.log("selected categories: ");
+console.log(selectedCategories);
+
+let texts = await getCollection("texts");
+
+const allCategories = Array.from(
+  new Set(texts.flatMap((text) => text.data.categories ?? []))
+).sort();
+console.log(allCategories);
+
+// get texts where every category included
+if (selectedCategories.length > 0) {
+  console.log("ran");
+  texts = texts.filter((text) =>
+    selectedCategories.every((cat) => text.data.categories?.includes(cat))
+  );
+  console.log(texts.length);
+}
+
+texts = texts.sort((a, b) => a.data.year - b.data.year);
+---
+
+<Layout>
+  <body class="bg-base-100 text-base-content p-6 max-w-4xl mx-auto">
+    <TextsFilters
+      allCategories={allCategories}
+      selectedCategories={selectedCategories}
+    />
+    <Timeline texts={texts} />
+  </body>
+</Layout>

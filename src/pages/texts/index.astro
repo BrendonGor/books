@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content";
+import TextsFilters from "../../components/TextsFilters.astro";
+import Timeline from "../../components/Timeline.astro";
+import Layout from "../../layouts/Layout.astro";
+
+let texts = await getCollection("texts");
+texts = texts.sort((a, b) => a.data.year - b.data.year);
+
+const allCategories = Array.from(
+  new Set(texts.flatMap((text) => text.data.categories ?? []))
+).sort();
+const selectedCategories: string[] = [];
+---
+
+<Layout>
+  <body class="bg-base-100 text-base-content p-6 max-w-4xl mx-auto">
+    <TextsFilters
+      allCategories={allCategories}
+      selectedCategories={selectedCategories}
+    />
+    <Timeline texts={texts} />
+  </body>
+</Layout>
