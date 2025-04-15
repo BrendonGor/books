@@ -5,7 +5,7 @@ year: 1532
 sources:
   - "https://www.gutenberg.org/ebooks/1232"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: [	politics, philosophy, ethics, military]
 image_url: https://insights.som.yale.edu/sites/default/files/styles/max_1300x1300/public/2021-04/Portrait_of_Niccolo_Machiavelli_by_Santi_di_Tito.jpeg?itok=slLB2RKN
 ---
 

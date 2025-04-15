@@ -1,6 +1,6 @@
 ---
-from: loving-colloquy.md
-to: letter-22-to-eustochium.md
+from: loving-colloquy
+to: letter-22-to-eustochium
 writer: brendon-gorelik
 ---
 

@@ -1,6 +1,6 @@
 ---
-from: dantes-inferno.md
-to: consolation-of-philosophy.md
+from: dantes-inferno
+to: consolation-of-philosophy
 writer: brendon-gorelik
 ---
 

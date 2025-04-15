@@ -1,6 +1,6 @@
 ---
-from: texts/utopia.md
-to: texts/augustines-confessions.md
+from: utopia
+to: augustines-confessions
 writer: brendon-gorelik
 ---
 

@@ -1,6 +1,6 @@
 ---
-from: texts/the-prince.md
-to: texts/augustines-confessions.md
+from: the-prince
+to: augustines-confessions
 writer: brendon-gorelik
 ---
 

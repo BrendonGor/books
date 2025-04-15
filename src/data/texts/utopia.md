@@ -5,7 +5,7 @@ year: 1516
 sources:
   - "https://www.gutenberg.org/ebooks/2130"
 recommenders: ["professor-ginger-smoak"]
-categories: ["economics"]
+categories: [	philosophy, politics, economics, allegory]
 image_url: https://i0.wp.com/hyperallergic-newspack.s3.amazonaws.com/uploads/2016/12/thomasmorusutopia-720x1020.jpg?resize=720%2C1020&quality=90
 ---
 

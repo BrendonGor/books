@@ -5,7 +5,7 @@ year: 373
 sources:
   - "https://www.newadvent.org/fathers/3001014.htm"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: ["religion"]
 image_url: https://i.ytimg.com/vi/wmqf8XNB9us/maxresdefault.jpg
 ---
 

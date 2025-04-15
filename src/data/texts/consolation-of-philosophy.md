@@ -5,7 +5,7 @@ year: 524
 sources:
   - "https://www.gutenberg.org/ebooks/14328"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: [philosophy, ethics]
 image_url: https://thepostcalvin.com/wp-content/uploads/2021/04/wheel-1080x675.jpeg
 ---
 

@@ -5,7 +5,7 @@ year: -380
 sources:
   - "https://plato.stanford.edu/entries/plato-metaphysics/#PlatAllegCave"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: [philosophy, allegory]
 image_url: https://farm3.staticflickr.com/2821/11516702483_0c0465d29b_z.jpg
 ---
 

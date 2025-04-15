@@ -5,7 +5,7 @@ year: 800
 sources:
   - "https://www.gutenberg.org/ebooks/5667"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: [literature, myth, culture]
 image_url: https://www.publicbooks.org/wp-content/uploads/2014/07/One_Thousand_and_One_Nights17_cropped.jpg
 ---
 

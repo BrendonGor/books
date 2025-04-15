@@ -5,7 +5,7 @@ year: -500
 sources:
   - "https://www.gutenberg.org/ebooks/132"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: [politics, military]
 image_url: https://hamiltonian.alexanderhamiltonsociety.org/wp-content/uploads/2024/08/artofwar-1000x486.jpeg
 ---
 

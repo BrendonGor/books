@@ -5,7 +5,7 @@ year: 1300
 sources:
   - "https://www.sacred-texts.com/chr/kn/index.htm"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: ["politics", "religion", "myth"]
 image_url: https://b-cdn.springnest.com/media/img/z8/saba_ephiop_027458b78.jpg?width=807
 ---
 

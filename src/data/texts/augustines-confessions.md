@@ -5,7 +5,7 @@ year: 398
 sources:
   - "https://www.newadvent.org/fathers/1101.htm"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: [religion, philosophy, ethics]
 image_url: https://woforgmedia.wordonfire.org/wp-content/uploads/2023/08/15092721/Screen-Shot-2023-08-27-at-10.04.37-PM-2500x1440.png
 ---
 

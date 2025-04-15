@@ -5,7 +5,7 @@ year: 1177
 sources:
   - "https://www.poetryintranslation.com/PITBR/Persian/AttarConference.php"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: [	religion, poetry, allegory, mysticism]
 image_url: https://www.sfcv.org/sites/default/files/styles/full_width_content_870x/public/media/images/2023-10/conference_header_0.jpg?itok=IYMrPeDV
 ---
 

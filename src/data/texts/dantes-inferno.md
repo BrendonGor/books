@@ -5,7 +5,7 @@ year: 1320
 sources:
   - "https://www.gutenberg.org/ebooks/8800"
 recommenders: ["professor-ginger-smoak"]
-categories: ["religion"]
+categories: [religion, allegory, epic, ethics]
 image_url: https://cdn8.openculture.com/2018/06/11213601/Botticellis-Inferno-e1528782824541.jpg
 ---
 

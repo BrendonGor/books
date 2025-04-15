@@ -5,7 +5,7 @@ year: 1577
 sources:
   - "https://www.poetryfoundation.org/poems/50339/loving-colloquy"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: ["religion", "mysticism", "poetry"]
 image_url: https://woforgmedia.wordonfire.org/wp-content/uploads/2014/10/15104416/blogstteresa.jpg
 ---
 

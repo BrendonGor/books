@@ -5,7 +5,7 @@ year: 1400
 sources:
   - "https://www.gutenberg.org/ebooks/14568"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: [ethics]
 image_url: https://crisismagazine.com/wp-content/uploads/2021/07/g243_u119895_sirgawain.jpg
 ---
 

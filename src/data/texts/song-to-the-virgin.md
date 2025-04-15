@@ -5,7 +5,7 @@ year: 1150
 sources:
   - "https://www.poetryfoundation.org/poems/50340/song-to-the-virgin"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: [	religion, poetry, mysticism]
 image_url: https://www.catholicartandjewelry.com/cdn/shop/products/c0b15044-39e9-50e2-a873-835bd335e55b.jpg?v=1667251127&width=1946
 ---
 

@@ -5,7 +5,7 @@ year: 384
 sources:
   - "https://www.newadvent.org/fathers/3001022.htm"
 recommenders: ["professor-ginger-smoak"]
-categories: []
+categories: [	religion, ethics]
 image_url: https://i.ytimg.com/vi/-djwNMFYZ1Q/sddefault.jpg
 ---
 
